@@ -1,91 +1,194 @@
 "use client";
-import { motion } from "framer-motion";
-import { Mail } from "lucide-react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useRef } from "react";
+import Navbar from "./Navbar";
+
+// Sub-component to safely animate individual words without breaking linter rules
+function AnimatedWord({ word, index, total, progress }: { word: string; index: number; total: number; progress: any }) {
+  const start = 0.58 + (index / total) * 0.28;
+  const end = start + 0.04;
+  
+  // PROMPT MERGE: Words change color sequentially from grey (#ccc) to black (#111) on scroll
+  const color = useTransform(progress, [start, end], ["#cccccc", "#111111"]);
+  
+  return (
+    <motion.span style={{ color }} className="inline-block mx-[0.15em] font-black uppercase tracking-tighter">
+      {word}
+    </motion.span>
+  );
+}
 
 export default function Hero() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  // SPRING PHYSICS: Smooth tracking mapping engine
+  const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
+  const smoothProgress = useSpring(scrollYProgress, springConfig);
+
+  // 1. HEADLINE ANIMATION
+  const headlineOpacity = useTransform(smoothProgress, [0, 0.15], [1, 0]);
+  const headlineY = useTransform(smoothProgress, [0, 0.15], [0, -50]); 
+  const headlineScale = useTransform(smoothProgress, [0, 0.15], [1, 0.9]); 
+
+  // 2. PHOTO ANIMATION (Flip and scale triggers correctly from 0.10 to 0.40)
+  const rotateY = useTransform(smoothProgress, [0.10, 0.40], [0, 180]);
+  const width = useTransform(smoothProgress, [0.10, 0.40], ["220px", "350px"]);
+  const height = useTransform(smoothProgress, [0.10, 0.40], ["300px", "400px"]);
+  const borderRadius = useTransform(smoothProgress, [0.10, 0.40], ["2rem", "2rem"]);
+
+  // Photo visibility logic — Page load par 1 rahegi, baad mein 0.52 par fade-out hogi
+  const photoOpacity = useTransform(smoothProgress, [0, 0.52, 0.60], [1, 1, 0]);
+  const photoY = useTransform(smoothProgress, [0, 0.52, 0.60], [0, 0, -60]);
+
+  // 3. BIO TEXT TIMING (Hey! and paragraphs) — Shuru mein 0 opacity rahegi
+  const textOpacity = useTransform(smoothProgress, [0, 0.35, 0.45, 0.52, 0.60], [0, 0, 1, 1, 0]);
+  const textY = useTransform(smoothProgress, [0, 0.35, 0.45, 0.52, 0.60], [30, 30, 0, 0, -60]);
+
+  // STICKERS TIMING
+  const stickerOpacity = useTransform(smoothProgress, [0, 0.12], [1, 0]);
+
+  // 4. SCROLL PARAGRAPH FADE TIMING
+  const paragraphOpacity = useTransform(smoothProgress, [0.54, 0.62], [0, 1]);
+  const paragraphY = useTransform(smoothProgress, [0.54, 0.62], [40, 0]);
+
+  const paragraphText = "From idea to launch. Clean, scalable digital products built to move fast, stay simple, and perform in real-world use, driven by clarity, structured systems, and intentional design.";
+  const words = paragraphText.split(" ");
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-[#0A192F] px-6">
-      <div className="max-w-4xl mx-auto text-center flex flex-col items-center">
+    <div ref={containerRef} className="relative w-full h-[300vh] bg-[#F4F3EF]">
+      <div className="sticky top-0 w-full h-screen flex flex-col items-center justify-center overflow-hidden px-4 md:px-12">
+        <Navbar />
 
-        {/* Title */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-white font-extrabold text-5xl sm:text-6xl md:text-7xl mb-2"
-        >
-          Kishor Kumar Shriwas
-        </motion.h1>
-
-        {/* Subtitle */}
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-gray-400 font-semibold text-3xl sm:text-4xl md:text-5xl mb-6"
-        >
-          I build systems and tell stories.
-        </motion.h2>
-
-        {/* Description */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-gray-400 text-lg md:text-xl leading-relaxed mb-12"
-        >
-          Techno-Creative IT Professional | Full-Stack Developer + AI/ML + Digital Media Operations.<br className="hidden md:block" />
-          Bridging the gap between robust code and impactful content.
-        </motion.p>
-
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex items-center justify-center gap-16 md:gap-24 mb-14"
-        >
-          <div className="flex flex-col items-center">
-            <h3 className="text-white font-bold text-5xl mb-2">120 <span className="text-[#00C2A8]">Hrs</span></h3>
-            <p className="text-xs text-gray-500 font-mono uppercase tracking-widest">Media Training</p>
-          </div>
-          <div className="flex flex-col items-center">
-            <h3 className="text-white font-bold text-5xl mb-2">3<span className="text-[#6C63FF]">+</span></h3>
-            <p className="text-xs text-gray-500 font-mono uppercase tracking-widest">Major Projects</p>
-          </div>
-        </motion.div>
-
-        {/* Socials & Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="flex items-center justify-center gap-5"
-        >
-          {/* LinkedIn Icon (SVG Custom Code) */}
-          <a href="https://linkedin.com/in/kishorshriwas007" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full border border-gray-700 text-gray-400 hover:text-white hover:border-[#6C63FF] transition-all">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-              <rect x="2" y="9" width="4" height="12"></rect>
-              <circle cx="4" cy="4" r="2"></circle>
-            </svg>
-          </a>
-
-          <a href="mailto:kishorshriwas007@gmail.com" className="p-3 rounded-full border border-gray-700 text-gray-400 hover:text-white hover:border-[#6C63FF] transition-all">
-            <Mail className="w-20px h-20px" style={{ width: 20, height: 20 }} />
-          </a>
-
-          <a
-            href="/docs/RESUME.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-8 py-3 bg-transparent border border-[#6C63FF] text-[#6C63FF] rounded-full hover:bg-[#6C63FF]/10 transition-all font-semibold ml-2"
+        <div className="relative w-full max-w-[1300px] flex justify-center items-center z-10 mt-10 min-h-[600px]">
+          
+          {/* LAYER 1: BIG TITLE */}
+          {/* FIXED: top-0 ko top-6 karke title ko halka sa neeche push kiya hai */}
+          <motion.div
+            style={{ 
+              opacity: headlineOpacity, 
+              y: headlineY, 
+              scale: headlineScale,
+            }}
+            className="absolute top-6 w-full flex flex-col items-center justify-start pointer-events-none z-40"
           >
-            View My Resume
-          </a>
+            <div className="relative w-full flex flex-col items-center justify-start">
+              
+              {/* Left Star Sticker */}
+              <motion.div 
+                style={{ opacity: stickerOpacity }}
+                className="absolute -left-6 md:-left-4 top-[-20px] md:top-[-10px] w-14 h-14 md:w-24 md:h-24 select-none"
+              >
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-md">
+                  <path d="M50 0C50 27.6142 27.6142 50 0 50C27.6142 50 50 72.3858 50 100C50 72.3858 72.3858 50 100 50C72.3858 50 50 27.6142 50 0Z" fill="black" />
+                </svg>
+              </motion.div>
+
+              <h1 className="text-black font-black uppercase leading-[0.85] text-[9vw] md:text-[6.5vw] tracking-tighter m-0 p-0 text-center">SOFTWARE ENGINEER</h1>
+              
+              <div className="relative mt-2">
+                <h1 className="text-black font-black uppercase leading-[0.85] text-[9vw] md:text-[6.5vw] tracking-tighter m-0 p-0 text-center">& DIGITAL MEDIA</h1>
+                
+                {/* Right Lightning Bolt Sticker */}
+                <motion.div 
+                  style={{ opacity: stickerOpacity }}
+                  className="absolute -right-10 md:-right-20 bottom-[-15px] md:bottom-[-10px] w-12 h-12 md:w-20 md:h-20 select-none"
+                >
+                  <svg viewBox="0 0 24 24" fill="black" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-md">
+                    <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="black" strokeWidth="0.5" strokeLinejoin="round"/>
+                  </svg>
+                </motion.div>
+              </div>
+
+            </div>
+          </motion.div>
+
+          {/* LAYER 2: BIO & PHOTO CONTAINER */}
+          <div className="absolute w-full max-w-6xl flex flex-col md:flex-row items-stretch justify-center gap-8 md:gap-16 z-30 mt-[220px] md:mt-[260px]">
+
+            {/* Left Bio Column */}
+            <motion.div
+              style={{ opacity: textOpacity, y: textY }}
+              className="flex-1 flex flex-col justify-between text-left py-2"
+            >
+              <h2 className="text-6xl md:text-7xl font-bold tracking-tighter text-[#111111] leading-none mb-8 md:mb-0">
+                Hey!
+              </h2>
+              <p className="text-[17px] md:text-[18px] font-semibold leading-[1.5] text-[#111111] tracking-tight">
+                I'm Kishor, a techno-creative builder based in India, currently managing digital media operations and software development at Prasar Bharati (Akashvani).
+              </p>
+            </motion.div>
+
+            {/* Center Photo Wrapper */}
+            <motion.div 
+              style={{ opacity: photoOpacity, y: photoY, perspective: "1500px" }}
+              className="relative flex-shrink-0 mx-auto"
+            >
+              <motion.div
+                layoutId="profile-photo"
+                className="shadow-2xl"
+                style={{ width, height, borderRadius, transformStyle: "preserve-3d", rotateY }}
+              >
+                {/* Front */}
+                <div className="absolute inset-0 border-4 border-[#F4F3EF] [backface-visibility:hidden]" style={{ borderRadius: "inherit", transform: "rotateY(0deg) translateZ(1px)" }}>
+                  <img src="/images/profile.jpg" className="w-full h-full object-cover" alt="Kishor Shriwas" />
+                </div>
+                {/* Back (Red) */}
+                <div className="absolute inset-0 border-4 border-[#F4F3EF] [backface-visibility:hidden] bg-[#D6001C]" style={{ borderRadius: "inherit", transform: "rotateY(180deg) translateZ(1px)" }}>
+                  <img src="/images/profile.jpg" className="w-full h-full object-cover mix-blend-multiply" alt="Kishor Shriwas" />
+                </div>
+              </motion.div>
+            </motion.div>
+
+            {/* Right Bio Column */}
+            <motion.div
+              style={{ opacity: textOpacity, y: textY }}
+              className="flex-1 flex flex-col justify-end text-left space-y-5 py-2"
+            >
+              <p className="text-[17px] md:text-[18px] font-semibold leading-[1.5] text-[#111111] tracking-tight">
+                I'm a software engineer and broadcast professional with a strong focus on building modern, scalable, and impact-driven digital experiences.
+              </p>
+              <p className="text-[17px] md:text-[18px] font-semibold leading-[1.5] text-[#111111] tracking-tight">
+                With a Master's in Computer Applications and AI/ML qualifications from IIT Hyderabad (TiHAN), I bridge the gap between high-performance code and flawless real-time media execution.
+              </p>
+            </motion.div>
+            
+          </div>
+
+          {/* LAYER 4: NEW SCROLL WORD REVEAL PARAGRAPH */}
+          <motion.div
+            style={{ opacity: paragraphOpacity, y: paragraphY }}
+            className="absolute w-full max-w-5xl px-6 md:px-12 flex items-center justify-center text-center z-20 pointer-events-none mt-12"
+          >
+            <p className="text-xl md:text-[2.6vw] leading-[1.35] text-center tracking-tighter select-none flex flex-wrap justify-center content-center">
+              {words.map((word, idx) => (
+                <AnimatedWord 
+                  key={idx} 
+                  word={word} 
+                  index={idx} 
+                  total={words.length} 
+                  progress={smoothProgress} 
+                />
+              ))}
+            </p>
+          </motion.div>
+
+        </div>
+
+        {/* LAYER 3: BOTTOM CORNERS TEXT */}
+        <motion.div 
+          style={{ opacity: headlineOpacity }}
+          className="absolute bottom-10 left-0 w-full px-6 md:px-16 flex justify-between items-center text-black font-black tracking-tighter select-none pointer-events-none z-40"
+        >
+          <div className="text-xl md:text-[2.2vw]">©2026</div>
+          <div className="text-sm md:text-[1.2vw] font-black uppercase">/CREATING SINCE 2023</div>
         </motion.div>
 
       </div>
-    </section>
+    </div>
   );
 }

@@ -24,13 +24,13 @@ export default function DotsBackground() {
     setStars(generatedStars);
     setMounted(true);
 
-    // 2. Scroll Detector (Arrow ko kab dikhana hai)
+    // 2. Scroll Detector
     let scrollTimer: NodeJS.Timeout;
     const handleScroll = () => {
-      setIsScrolling(true); // Scroll hote hi arrow gayab
+      setIsScrolling(true);
       clearTimeout(scrollTimer);
       scrollTimer = setTimeout(() => {
-        setIsScrolling(false); // Scroll rukne ke thodi der baad arrow wapas fresh banega
+        setIsScrolling(false);
       }, 250); 
     };
 
@@ -43,11 +43,11 @@ export default function DotsBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden">
       
-      {/* 1. Upar se Neeche Girte Hue Stars */}
+      {/* 1. Upar se Neeche Girte Hue Stars (Ab Black color mein) */}
       {stars.map((star) => (
         <motion.div
           key={star.id}
-          className="absolute bg-white rounded-full"
+          className="absolute bg-black rounded-full" // Yahan bg-white ko bg-black kar diya
           style={{
             left: `${star.left}%`,
             width: `${star.size}px`,
@@ -56,7 +56,7 @@ export default function DotsBackground() {
             top: "-10%", 
           }}
           animate={{
-            top: ["-10%", "110%"], // Top to Bottom falling
+            top: ["-10%", "110%"],
           }}
           transition={{
             duration: star.duration,
@@ -69,7 +69,6 @@ export default function DotsBackground() {
 
       {/* 2. Smart Blinking & Dropping Arrow */}
       <AnimatePresence>
-        {/* Jab scroll nahi ho raha hoga, sirf tabhi arrow dikhega */}
         {!isScrolling && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -77,16 +76,15 @@ export default function DotsBackground() {
             exit={{ opacity: 0, transition: { duration: 0.2 } }}
             className="absolute bottom-12 left-1/2 -translate-x-1/2"
           >
-            {/* Wrapper: Yeh arrow ko neeche drop karega */}
             <motion.div
               animate={{
-                y: [0, 0, 45],     // Pehle ruka rahega, fir tezi se neeche drop hoga
-                opacity: [0, 1, 0] // Fade in -> Solid -> Fade out (drop hote time)
+                y: [0, 0, 45],
+                opacity: [0, 1, 0]
               }}
               transition={{
-                duration: 1.5,     // 1.5 second ka total loop
+                duration: 1.5,
                 repeat: Infinity,
-                times: [0, 0.4, 1], // 0-40% time mein banega, baaki 60% time mein drop hoga
+                times: [0, 0.4, 1],
                 ease: "easeIn"
               }}
             >
@@ -96,21 +94,20 @@ export default function DotsBackground() {
                 height="40"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="white"
+                stroke="black" // Arrow ko bhi black kar diya taaki dots se match kare
                 strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 className="opacity-80 drop-shadow-lg"
               >
-                {/* SVG Path: Yeh arrow ko draw karega */}
                 <motion.path
-                  d="M4 8l8 8 8-8" // Custom sleek arrow shape
+                  d="M4 8l8 8 8-8"
                   initial={{ pathLength: 0 }}
-                  animate={{ pathLength: [0, 1, 1] }} // Line draw hogi
+                  animate={{ pathLength: [0, 1, 1] }}
                   transition={{
                     duration: 1.5,
                     repeat: Infinity,
-                    times: [0, 0.4, 1], // Drawing speed drop wali speed se match kar rahi hai
+                    times: [0, 0.4, 1],
                     ease: "easeOut"
                   }}
                 />
