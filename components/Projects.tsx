@@ -1,3 +1,4 @@
+
 "use client";
 import { motion } from "framer-motion";
 
@@ -39,7 +40,9 @@ export default function Projects() {
           <h2 className="text-5xl font-black text-black tracking-tighter uppercase m-0 p-0">
             Featured Projects
           </h2>
-          
+          <button className="border border-black text-black px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider hover:bg-black hover:text-[#F4F3EF] transition-colors duration-300 flex items-center gap-1.5 shrink-0">
+            View All Work <span className="text-sm leading-none">↗</span>
+          </button>
         </div>
 
         {/* CSS GRID: 2 Columns, Gap-6 with complete flat minimal look */}

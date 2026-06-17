@@ -8,7 +8,7 @@ function AnimatedWord({ word, index, total, progress }: { word: string; index: n
   const start = 0.58 + (index / total) * 0.28;
   const end = start + 0.04;
   
-  // PROMPT MERGE: Words change color sequentially from grey (#ccc) to black (#111) on scroll
+  // Words change color sequentially from grey (#ccc) to black (#111) on scroll
   const color = useTransform(progress, [start, end], ["#cccccc", "#111111"]);
   
   return (
@@ -26,28 +26,28 @@ export default function Hero() {
     offset: ["start start", "end end"]
   });
 
-  // SPRING PHYSICS: Smooth tracking mapping engine
-  const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
+  // FIXED PHYSICS: Calibrated heavy cinematic inertia glide configuration
+  const springConfig = { stiffness: 45, damping: 22, mass: 0.4, restDelta: 0.0001 };
   const smoothProgress = useSpring(scrollYProgress, springConfig);
 
-  // 1. HEADLINE ANIMATION
-  const headlineOpacity = useTransform(smoothProgress, [0, 0.15], [1, 0]);
-  const headlineY = useTransform(smoothProgress, [0, 0.15], [0, -50]); 
-  const headlineScale = useTransform(smoothProgress, [0, 0.15], [1, 0.9]); 
+  // 1. HEADLINE ANIMATION (Fades cleanly from 0 to 0.18)
+  const headlineOpacity = useTransform(smoothProgress, [0, 0.18], [1, 0]);
+  const headlineY = useTransform(smoothProgress, [0, 0.18], [0, -50]); 
+  const headlineScale = useTransform(smoothProgress, [0, 0.18], [1, 0.9]); 
 
-  // 2. PHOTO ANIMATION (Flip and scale triggers correctly from 0.10 to 0.40)
-  const rotateY = useTransform(smoothProgress, [0.10, 0.40], [0, 180]);
-  const width = useTransform(smoothProgress, [0.10, 0.40], ["220px", "350px"]);
-  const height = useTransform(smoothProgress, [0.10, 0.40], ["300px", "400px"]);
-  const borderRadius = useTransform(smoothProgress, [0.10, 0.40], ["2rem", "2rem"]);
+  // 2. PHOTO ANIMATION (Flips and resizes flawlessly between 0.10 and 0.45)
+  const rotateY = useTransform(smoothProgress, [0.10, 0.45], [0, 180]);
+  const width = useTransform(smoothProgress, [0.10, 0.45], ["220px", "350px"]);
+  const height = useTransform(smoothProgress, [0.10, 0.45], ["300px", "400px"]);
+  const borderRadius = useTransform(smoothProgress, [0.10, 0.45], ["2rem", "2rem"]);
 
   // Photo visibility logic — Page load par 1 rahegi, baad mein 0.52 par fade-out hogi
   const photoOpacity = useTransform(smoothProgress, [0, 0.52, 0.60], [1, 1, 0]);
   const photoY = useTransform(smoothProgress, [0, 0.52, 0.60], [0, 0, -60]);
 
-  // 3. BIO TEXT TIMING (Hey! and paragraphs) — Shuru mein 0 opacity rahegi
-  const textOpacity = useTransform(smoothProgress, [0, 0.35, 0.45, 0.52, 0.60], [0, 0, 1, 1, 0]);
-  const textY = useTransform(smoothProgress, [0, 0.35, 0.45, 0.52, 0.60], [30, 30, 0, 0, -60]);
+  // Bio text begins fading in at 0.12 right as the headline leaves, killing the empty void
+  const textOpacity = useTransform(smoothProgress, [0, 0.12, 0.26, 0.52, 0.60], [0, 0, 1, 1, 0]);
+  const textY = useTransform(smoothProgress, [0, 0.12, 0.26, 0.52, 0.60], [30, 30, 0, 0, -60]);
 
   // STICKERS TIMING
   const stickerOpacity = useTransform(smoothProgress, [0, 0.12], [1, 0]);
@@ -61,18 +61,20 @@ export default function Hero() {
 
   return (
     <div ref={containerRef} className="relative w-full h-[300vh] bg-[#F4F3EF]">
-      <div className="sticky top-0 w-full h-screen flex flex-col items-center justify-center overflow-hidden px-4 md:px-12">
+      {/* FIXED: Added dynamic rendering filters to force smooth subpixel text-smoothing */}
+      <div className="sticky top-0 w-full h-screen flex flex-col items-center justify-center overflow-hidden px-4 md:px-12 transform-gpu subpixel-antialiased">
         <Navbar />
 
+        {/* LOCKED MAXIMUM GEOMETRY FRAME */}
         <div className="relative w-full max-w-[1300px] flex justify-center items-center z-10 mt-10 min-h-[600px]">
           
           {/* LAYER 1: BIG TITLE */}
-          {/* FIXED: top-0 ko top-6 karke title ko halka sa neeche push kiya hai */}
           <motion.div
             style={{ 
               opacity: headlineOpacity, 
               y: headlineY, 
               scale: headlineScale,
+              willChange: "transform, opacity"
             }}
             className="absolute top-6 w-full flex flex-col items-center justify-start pointer-events-none z-40"
           >
@@ -112,11 +114,11 @@ export default function Hero() {
 
             {/* Left Bio Column */}
             <motion.div
-              style={{ opacity: textOpacity, y: textY }}
+              style={{ opacity: textOpacity, y: textY, willChange: "transform, opacity" }}
               className="flex-1 flex flex-col justify-between text-left py-2"
             >
               <h2 className="text-6xl md:text-7xl font-bold tracking-tighter text-[#111111] leading-none mb-8 md:mb-0">
-                Hey!
+                Hey
               </h2>
               <p className="text-[17px] md:text-[18px] font-semibold leading-[1.5] text-[#111111] tracking-tight">
                 I'm Kishor, a techno-creative builder based in India, currently managing digital media operations and software development at Prasar Bharati (Akashvani).
@@ -125,20 +127,27 @@ export default function Hero() {
 
             {/* Center Photo Wrapper */}
             <motion.div 
-              style={{ opacity: photoOpacity, y: photoY, perspective: "1500px" }}
-              className="relative flex-shrink-0 mx-auto"
+              style={{ opacity: photoOpacity, y: photoY, perspective: "1500px", willChange: "transform, opacity" }}
+              className="relative flex-shrink-0 mx-auto flex items-center justify-center min-w-[350px] min-h-[400px]"
             >
               <motion.div
                 layoutId="profile-photo"
                 className="shadow-2xl"
-                style={{ width, height, borderRadius, transformStyle: "preserve-3d", rotateY }}
+                style={{ 
+                  width, 
+                  height, 
+                  borderRadius, 
+                  transformStyle: "preserve-3d", 
+                  rotateY,
+                  willChange: "transform, width, height"
+                }}
               >
-                {/* Front */}
-                <div className="absolute inset-0 border-4 border-[#F4F3EF] [backface-visibility:hidden]" style={{ borderRadius: "inherit", transform: "rotateY(0deg) translateZ(1px)" }}>
-                  <img src="/images/profile.jpg" className="w-full h-full object-cover" alt="Kishor Shriwas" />
+                {/* Front Face Frame */}
+                <div className="absolute inset-0 border-4 border-[#F4F3EF] [backface-visibility:hidden] overflow-hidden rounded-[inherit]" style={{ transform: "rotateY(0deg) translateZ(1px) translate3d(0,0,0)" }}>
+                  <img src="/images/profile.jpg" className="w-full h-full object-cover grayscale" alt="Kishor Shriwas" />
                 </div>
-                {/* Back (Red) */}
-                <div className="absolute inset-0 border-4 border-[#F4F3EF] [backface-visibility:hidden] bg-[#D6001C]" style={{ borderRadius: "inherit", transform: "rotateY(180deg) translateZ(1px)" }}>
+                {/* Back Face Frame */}
+                <div className="absolute inset-0 border-4 border-[#F4F3EF] [backface-visibility:hidden] bg-[#D6001C] overflow-hidden rounded-[inherit]" style={{ transform: "rotateY(180deg) translateZ(1px) translate3d(0,0,0)" }}>
                   <img src="/images/profile.jpg" className="w-full h-full object-cover mix-blend-multiply" alt="Kishor Shriwas" />
                 </div>
               </motion.div>
@@ -146,7 +155,7 @@ export default function Hero() {
 
             {/* Right Bio Column */}
             <motion.div
-              style={{ opacity: textOpacity, y: textY }}
+              style={{ opacity: textOpacity, y: textY, willChange: "transform, opacity" }}
               className="flex-1 flex flex-col justify-end text-left space-y-5 py-2"
             >
               <p className="text-[17px] md:text-[18px] font-semibold leading-[1.5] text-[#111111] tracking-tight">
@@ -161,7 +170,7 @@ export default function Hero() {
 
           {/* LAYER 4: NEW SCROLL WORD REVEAL PARAGRAPH */}
           <motion.div
-            style={{ opacity: paragraphOpacity, y: paragraphY }}
+            style={{ opacity: paragraphOpacity, y: paragraphY, willChange: "transform, opacity" }}
             className="absolute w-full max-w-5xl px-6 md:px-12 flex items-center justify-center text-center z-20 pointer-events-none mt-12"
           >
             <p className="text-xl md:text-[2.6vw] leading-[1.35] text-center tracking-tighter select-none flex flex-wrap justify-center content-center">
@@ -181,7 +190,7 @@ export default function Hero() {
 
         {/* LAYER 3: BOTTOM CORNERS TEXT */}
         <motion.div 
-          style={{ opacity: headlineOpacity }}
+          style={{ opacity: headlineOpacity, willChange: "opacity" }}
           className="absolute bottom-10 left-0 w-full px-6 md:px-16 flex justify-between items-center text-black font-black tracking-tighter select-none pointer-events-none z-40"
         >
           <div className="text-xl md:text-[2.2vw]">©2026</div>
