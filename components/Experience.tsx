@@ -58,7 +58,8 @@ export default function Experience() {
   const lineHeight = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <section className="py-24 bg-[#F4F3EF] text-neutral-800 px-6 md:px-12">
+    // 👇 YAHAN ID="experience" ADD KI HAI 👇
+    <section id="experience" className="py-24 bg-[#F4F3EF] text-neutral-800 px-6 md:px-12">
       <div className="max-w-4xl mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 40 }} 

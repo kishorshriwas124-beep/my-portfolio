@@ -8,7 +8,8 @@ export default function Contact() {
       {/* ==============================================================
           PART 1: LET'S TALK FORM SECTION (Cream Theme matching Hero)
           ============================================================== */}
-      <section className="py-24 bg-[#F4F3EF] text-black px-6 md:px-12 relative">
+      {/* 👇 YAHAN BAS id="contact" ADD KIYA HAI 👇 */}
+      <section id="contact" className="py-24 bg-[#F4F3EF] text-black px-6 md:px-12 relative">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           
           {/* Left Column: Typography & Social Links */}
@@ -121,7 +122,7 @@ export default function Contact() {
             <span className="text-xs font-bold text-neutral-500 uppercase tracking-widest mb-4">/Quick links</span>
             <div className="grid grid-cols-2 gap-2 max-w-xs">
               <a href="#" className="px-5 py-2 bg-[#141414] border border-neutral-800 hover:bg-white hover:text-black transition-colors duration-300 text-xs font-bold uppercase tracking-wider rounded-xl text-center">Home</a>
-              <a href="#" className="px-5 py-2 bg-[#141414] border border-neutral-800 hover:bg-white hover:text-black transition-colors duration-300 text-xs font-bold uppercase tracking-wider rounded-xl text-center">About Me</a>
+              <a href="#hero-about" className="px-5 py-2 bg-[#141414] border border-neutral-800 hover:bg-white hover:text-black transition-colors duration-300 text-xs font-bold uppercase tracking-wider rounded-xl text-center">About Me</a>
               <a href="#" className="px-5 py-2 bg-[#141414] border border-neutral-800 hover:bg-white hover:text-black transition-colors duration-300 text-xs font-bold uppercase tracking-wider rounded-xl text-center">Services</a>
               <a href="#" className="px-5 py-2 bg-[#141414] border border-neutral-800 hover:bg-white hover:text-black transition-colors duration-300 text-xs font-bold uppercase tracking-wider rounded-xl text-center">Works</a>
             </div>

@@ -81,7 +81,8 @@ export default function Projects() {
   ];
 
   return (
-    <section className="py-24 bg-[#F4F3EF] px-6 md:px-12 text-gray-800">
+    // ID YAHAN ADD KI HAI: id="projects"
+    <section id="projects" className="py-24 bg-[#F4F3EF] px-6 md:px-12 text-gray-800">
       <div className="max-w-6xl mx-auto">
         
         <h2 className="text-5xl font-black text-black tracking-tighter uppercase mb-16">
