@@ -77,7 +77,7 @@ export default function Hero() {
           <div className="absolute w-full max-w-6xl flex flex-col md:flex-row items-stretch justify-center gap-8 md:gap-16 z-30 mt-[220px] md:mt-[260px]">
             <motion.div style={{ opacity: textOpacity, y: textY, willChange: "transform, opacity" }} className="flex-1 flex flex-col justify-between text-left py-2">
               <h2 className="text-6xl md:text-7xl font-bold tracking-tighter text-[#111111] leading-none mb-8 md:mb-0">Hey</h2>
-              <p className="text-[17px] md:text-[18px] font-semibold leading-[1.5] text-[#111111] tracking-tight">I'm Kishor, a techno-creative builder based in India, currently managing digital media operations and software development at Prasar Bharati (Akashvani).</p>
+              <p className="text-[17px] md:text-[18px] font-semibold leading-[1.5] text-[#111111] tracking-tight">I'm Kishor, I make things. I work in IT operations at Prasar Bharati — India's public broadcaster. Outside of work, I build software, explore new tech, and occasionally break things to understand how they work.</p>
             </motion.div>
 
             <motion.div style={{ opacity: photoOpacity, y: photoY, perspective: "1500px", willChange: "transform, opacity" }} className="relative flex-shrink-0 mx-auto flex items-center justify-center min-w-[350px] min-h-[400px]">
@@ -92,8 +92,8 @@ export default function Hero() {
             </motion.div>
 
             <motion.div style={{ opacity: textOpacity, y: textY, willChange: "transform, opacity" }} className="flex-1 flex flex-col justify-end text-left space-y-5 py-2">
-              <p className="text-[17px] md:text-[18px] font-semibold leading-[1.5] text-[#111111] tracking-tight">I'm a software engineer and broadcast professional with a strong focus on building modern, scalable, and impact-driven digital experiences.</p>
-              <p className="text-[17px] md:text-[18px] font-semibold leading-[1.5] text-[#111111] tracking-tight">With a Master's in Computer Applications and AI/ML qualifications from IIT Hyderabad (TiHAN), I bridge the gap between high-performance code and flawless real-time media execution.</p>
+              <p className="text-[17px] md:text-[18px] font-semibold leading-[1.5] text-[#111111] tracking-tight">As a software engineer and broadcast professional, I manage the CAS database and broadcast systems at Prasar Bharati.</p>
+              <p className="text-[17px] md:text-[18px] font-semibold leading-[1.5] text-[#111111] tracking-tight">On the development side, I build full-stack web applications with a focus on backend systems, structured databases, and work in AI/ML.</p>
             </motion.div>
           </div>
 
@@ -123,16 +123,16 @@ export default function Hero() {
           className="absolute bottom-28 md:bottom-24 right-6 md:right-16 flex flex-col items-end gap-4 z-40 pointer-events-none"
         >
           <div className="text-right">
-            <h3 className="text-xl md:text-2xl font-black text-black leading-none">4+</h3>
+            <h3 className="text-xl md:text-2xl font-black text-black leading-none">2+</h3>
             <p className="text-[10px] md:text-xs font-black uppercase tracking-widest text-[#555]">Years</p>
           </div>
           <div className="text-right">
-            <h3 className="text-xl md:text-2xl font-black text-black leading-none">10+</h3>
+            <h3 className="text-xl md:text-2xl font-black text-black leading-none">15+</h3>
             <p className="text-[10px] md:text-xs font-black uppercase tracking-widest text-[#555]">Projects</p>
           </div>
           <div className="text-right">
-            <h3 className="text-xl md:text-2xl font-black text-black leading-none">10K+</h3>
-            <p className="text-[10px] md:text-xs font-black uppercase tracking-widest text-[#555]">Hours</p>
+            <h3 className="text-xl md:text-2xl font-black text-black leading-none">WORK @ </h3>
+            <p className="text-[10px] md:text-xs font-black uppercase tracking-widest text-[#555]">PRASAR BHARATI</p>
           </div>
         </motion.div>
 
