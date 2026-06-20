@@ -39,7 +39,7 @@ export default function Hero() {
   const paragraphOpacity = useTransform(smoothProgress, [0.54, 0.62], [0, 1]);
   const paragraphY = useTransform(smoothProgress, [0.54, 0.62], [40, 0]);
 
-  const paragraphText = "From idea to launch. Clean, scalable digital products built to move fast, stay simple, and perform in real-world use, driven by clarity, structured systems, and intentional design.";
+  const paragraphText = "Some of the best lessons came from things breaking at the wrong time. Working in broadcast operations does that to you. Now I think about failure modes before I think about features";
   const words = paragraphText.split(" ");
 
   return (

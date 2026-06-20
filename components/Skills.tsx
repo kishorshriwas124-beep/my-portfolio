@@ -88,7 +88,8 @@ function GlobeNodes() {
 export default function Skills() {
   return (
     <section className="relative w-full h-[100vh] flex flex-col items-center justify-center overflow-hidden" style={{ background: "#F4F3EF" }}>
-      <motion.div initial={{ x: -40, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} viewport={{ once: true }} className="absolute top-24 left-12 z-20">
+      {/* Heading ko thora aur right push karne ke liye left-44 kiya hai */}
+      <motion.div initial={{ x: -40, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} viewport={{ once: true }} className="absolute top-24 left-44 z-20">
         <h2 className="text-[28px] font-bold text-black uppercase font-mono"> Tech Stack</h2>
       </motion.div>
       <div className="w-full h-full cursor-grab">
