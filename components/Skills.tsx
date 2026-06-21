@@ -66,10 +66,10 @@ function GlobeNodes() {
       {points.map((skill, i) => (
         <group key={i} position={[skill.x, skill.y, skill.z] as [number, number, number]}>
           <Html center>
-            <div 
+            <div
               className="bg-white p-2 rounded-xl border border-gray-200 shadow-lg flex flex-col items-center justify-center transition-all duration-300"
-              style={{ 
-                width: "55px", 
+              style={{
+                width: "55px",
                 height: "55px",
                 opacity: 1, // Fixed: Sab hamesha dikhenge
                 transform: 'scale(1)' // Fixed: Sabka size same rahega
@@ -89,8 +89,8 @@ export default function Skills() {
   return (
     <section className="relative w-full h-[100vh] flex flex-col items-center justify-center overflow-hidden" style={{ background: "#F4F3EF" }}>
       {/* Heading ko thora aur right push karne ke liye left-44 kiya hai */}
-      <motion.div initial={{ x: -40, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} viewport={{ once: true }} className="absolute top-24 left-44 z-20">
-        <h2 className="text-[28px] font-bold text-black uppercase font-mono"> Tech Stack</h2>
+      <motion.div initial={{ x: -40, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} viewport={{ once: true }} className="absolute top-24 left-36 z-20">
+        <h2 className="text-5xl font-black text-black tracking-tighter uppercase mb-16">Tech Stack</h2>
       </motion.div>
       <div className="w-full h-full cursor-grab">
         <Canvas camera={{ position: [0, 0, 15], fov: 45 }}>

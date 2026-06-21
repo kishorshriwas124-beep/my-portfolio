@@ -2,6 +2,7 @@
 import { LayoutGroup } from "framer-motion";
 import Navbar from "../components/Navbar"; // Navbar yahan import ho gaya
 import Hero from "../components/Hero";
+import WhatIDo from "../components/WhatIDo"; // 👈 Sahi spot par properly import kiya gaya hai
 import Skills from "../components/Skills"; 
 import Projects from "../components/Projects";
 import Experience from "../components/Experience";
@@ -15,6 +16,8 @@ export default function Home() {
       
       <LayoutGroup>
         <Hero />
+        {/* 🚀 Shuruat mein soche gaye sequence ke mutabik Hero ke theek niche exact place kiya hai */}
+        <WhatIDo /> 
         <Skills /> 
         <Projects />
         <Experience />

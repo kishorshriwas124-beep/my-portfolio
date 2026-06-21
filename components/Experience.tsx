@@ -69,8 +69,8 @@ export default function Experience() {
         >
           
           {/* HEADER ROW: Exact copy of Projects style header for clean symmetry */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-16 gap-6">
-            <h2 className="text-5xl font-black text-black tracking-tighter uppercase m-0 p-0">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 -ml-32">
+            <h2 className="text-5xl font-black text-black tracking-tighter uppercase mb-16">
               Experience & Education
             </h2>
           </div>
