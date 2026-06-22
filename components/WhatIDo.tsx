@@ -64,7 +64,7 @@ const mediaCards = [
     number: "07",
     tag: "ON-AIR",
     title: "Live Announcing",
-    desc: "Udhghoshak · Live Mic · Scripted & Unscripted Delivery",
+    desc: "उद्घोषक · Live Mic · Scripted & Unscripted Delivery",
     detail: "Trained to hold a live broadcast — clear, composed delivery on-air, where there's no take two and no editing safety net.",
     color: "#D6001C",
     bg: "#1A0005",
@@ -96,21 +96,23 @@ const mediaCards = [
     color: "#EAB308",
     bg: "#1A1400",
   },
+  // ─── CARD 11 — naya: On-Camera Presence ───────────────────────────────────
   {
     number: "11",
-    tag: "AUDIO",
-    title: "Sound Production",
-    desc: "Sony Sound Forge · Netia · Multi-track Mixing & Mastering",
-    detail: "Recording, editing, and mastering audio for broadcast — built to a standard where it has to sound right the first time it airs.",
-    color: "#F59E0B",
-    bg: "#1A1000",
+    tag: "FACE",
+    title: "On-Camera Presence",
+    desc: "Eye Contact · Facial Composure · Teleprompter Delivery · Studio Presenting",
+    detail: "Trained to hold the frame — steady eye contact with the lens, expressions that match the story, and the composure to keep delivering when the red light stays on.",
+    color: "#F472B6",
+    bg: "#1A0011",
   },
+  // ─── CARD 12 — merged: Video & Design + Sound Production ──────────────────
   {
     number: "12",
     tag: "CONTENT",
-    title: "Video & Design",
-    desc: "CapCut · VN Editor · Clipchamp · Canva · Graphic Design",
-    detail: "Short-form video editing, broadcast-quality audio cleanup, social media graphic design under real deadline pressure.",
+    title: "Video, Audio & Design",
+    desc: "CapCut · VN Editor · Clipchamp · Canva · Sony Sound Forge · Netia · Multi-track Mixing",
+    detail: "Short-form video editing, broadcast-quality audio recording, mixing and mastering, and social media graphic design — all under real deadline pressure, built to air-ready standard.",
     color: "#EC4899",
     bg: "#1A0010",
   },
@@ -157,14 +159,13 @@ export default function WhatIDo({
 
   const activeCards = activeTab === "engineer" ? engineerCards : mediaCards;
 
-  // 3D tilt handler for cards
   const handleCardMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateY = ((x - centerX) / centerX) * 12; // max 12deg
+    const rotateY = ((x - centerX) / centerX) * 12;
     const rotateX = -((y - centerY) / centerY) * 12;
     setCardTilt({ x: rotateX, y: rotateY });
   };
@@ -184,18 +185,14 @@ export default function WhatIDo({
     >
       <div className="max-w-7xl mx-auto min-h-[550px] flex flex-col items-center justify-center relative z-10">
 
-        {/* Section Heading */}
         <div className="w-full">
           <h2 className="text-5xl font-black text-black tracking-tighter uppercase mb-16 pl-4 md:pl-16">
             What I Do
           </h2>
         </div>
 
-        {/* Hover group: wraps text + cards so moving cursor between them doesn't close the panel */}
         <div
-          onMouseEnter={() => {
-            groupHoveredRef.current = true;
-          }}
+          onMouseEnter={() => { groupHoveredRef.current = true; }}
           onMouseLeave={() => {
             groupHoveredRef.current = false;
             window.setTimeout(() => {
@@ -207,7 +204,6 @@ export default function WhatIDo({
           className="w-full"
         >
 
-        {/* Main 3-Column Split Layout — bilkul original */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center w-full">
 
           {/* LEFT — Software Engineer */}
@@ -230,7 +226,7 @@ export default function WhatIDo({
               build
             </h3>
             <p className="text-sm md:text-base font-semibold text-neutral-700 tracking-tight leading-relaxed max-w-[290px]">
-              Five things I've learned to do well — from writing the code to keeping the systems under it alive.
+               Things I've learned to do well — from writing the code to keeping the systems under it alive.
             </p>
             <span className="flex items-center gap-1.5 text-xs font-bold text-black mt-3 lowercase tracking-wider">
               {pinnedTab === "engineer" ? (
@@ -247,7 +243,7 @@ export default function WhatIDo({
             </span>
           </div>
 
-          {/* CENTER — Photo — bilkul original */}
+          {/* CENTER — Photo */}
           <div className="flex justify-center order-1 md:order-2 py-4 pointer-events-none">
             <div
               style={{
@@ -299,7 +295,7 @@ export default function WhatIDo({
               broadcast
             </h3>
             <p className="text-sm md:text-base font-semibold text-neutral-700 tracking-tight leading-relaxed max-w-[290px]">
-              Five things I've learned to do well — from the script on the desk to the voice on air.
+               Things I've learned to do well — from the script on the desk to the voice on air.
             </p>
             <span className="flex items-center gap-1.5 text-xs font-bold text-black mt-3 lowercase tracking-wider">
               {pinnedTab === "media" ? (
@@ -318,7 +314,7 @@ export default function WhatIDo({
 
         </div>
 
-        {/* CARDS — bigger size + 3D motion graphics */}
+        {/* CARDS */}
         <div className="w-full mt-16" style={{ perspective: "1600px" }}>
           <AnimatePresence mode="wait">
             {activeTab !== "none" && (
@@ -366,7 +362,6 @@ export default function WhatIDo({
                           : `0 10px 30px -15px ${card.color}15`,
                       }}
                     >
-                      {/* Glow orb that follows depth */}
                       <div
                         className="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full blur-3xl transition-opacity duration-300"
                         style={{
@@ -376,7 +371,6 @@ export default function WhatIDo({
                         }}
                       />
 
-                      {/* Tag + Number */}
                       <div
                         className="flex items-start justify-between mb-5"
                         style={{ transform: isHovered ? "translateZ(40px)" : "translateZ(0px)", transition: "transform 300ms ease" }}
@@ -399,7 +393,6 @@ export default function WhatIDo({
                         </span>
                       </div>
 
-                      {/* Title */}
                       <h3
                         className="text-3xl md:text-[32px] font-black tracking-tighter uppercase leading-none mb-4"
                         style={{
@@ -411,7 +404,6 @@ export default function WhatIDo({
                         {card.title}
                       </h3>
 
-                      {/* Desc */}
                       <p
                         className="text-sm font-mono text-neutral-300 leading-relaxed mb-4"
                         style={{ transform: isHovered ? "translateZ(30px)" : "translateZ(0px)", transition: "transform 300ms ease" }}
@@ -419,7 +411,6 @@ export default function WhatIDo({
                         {card.desc}
                       </p>
 
-                      {/* Detail on hover */}
                       <motion.p
                         animate={{
                           opacity: isHovered ? 1 : 0,
@@ -432,7 +423,6 @@ export default function WhatIDo({
                         {card.detail}
                       </motion.p>
 
-                      {/* Bottom progress bar */}
                       <div
                         className="h-[3px] rounded-full mt-5"
                         style={{
@@ -442,9 +432,7 @@ export default function WhatIDo({
                         }}
                       >
                         <motion.div
-                          animate={{
-                            width: isHovered ? "100%" : "25%",
-                          }}
+                          animate={{ width: isHovered ? "100%" : "25%" }}
                           transition={{ duration: 0.35 }}
                           className="h-full rounded-full"
                           style={{ background: card.color }}
@@ -459,7 +447,6 @@ export default function WhatIDo({
         </div>
 
         </div>
-        {/* end hover group */}
 
       </div>
     </section>
